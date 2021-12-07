@@ -8,16 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Day1\input_day_1.txt" />
+    <None Remove="Day1\input.txt" />
+    <None Remove="Day2\input.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Day1\input_day_1.txt" />
+    <EmbeddedResource Include="Day1\input.txt" />
+    <EmbeddedResource Include="Day2\input.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LanguageExt.CodeGen" Version="4.0.3" />
     <PackageReference Include="LanguageExt.Core" Version="4.0.3" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0" />
+    <PackageReference Include="CodeGeneration.Roslyn.BuildTime" Version="0.6.1" PrivateAssets="all" />
+    <DotNetCliToolReference Include="dotnet-codegen" Version="0.6.1" />
   </ItemGroup>
 
 </Project>

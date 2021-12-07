@@ -22,7 +22,7 @@ public class DayOne : IPuzzleDay
         .Count(boolValue => boolValue);
 
     private static List<int> GetParsedInput() => FileProvider
-        .GetAllLines("Day1.input_day_1.txt")
+        .GetAllLines("Day1.input.txt")
         .Select(int.Parse)
         .ToList();
 }
