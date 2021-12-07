@@ -26,3 +26,5 @@ Eff<Unit> LogResult(string puzzleDayName, PuzzleResult puzzleResult)
 
     return Eff<Unit>.Success(Unit.Default);
 }
+
+// @formatter:on

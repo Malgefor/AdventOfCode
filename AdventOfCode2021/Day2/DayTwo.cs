@@ -10,6 +10,19 @@ public class DayTwo : IPuzzleDay
         yield return GetPuzzleTwoResult(instructions);
     }
 
+    private static PuzzleResult GetPuzzleOneResult(IList<IInstruction> instructions)
+    {
+        var (horizontalPosition, depth) = instructions.Aggregate(
+            (0, 0),
+            ((double HorizontalPosition, double Depth) position, IInstruction instruction) =>
+                instruction.Match(
+                    up => (position.HorizontalPosition, position.Depth - up.Change),
+                    down => (position.HorizontalPosition, position.Depth + down.Change),
+                    forward => (position.HorizontalPosition + forward.Change, position.Depth)));
+
+        return new PuzzleResult(1, horizontalPosition * depth);
+    }
+
     private static PuzzleResult GetPuzzleTwoResult(IList<IInstruction> instructions)
     {
         var (horizontalPosition, depth, _) = instructions.Aggregate(
@@ -25,19 +38,6 @@ public class DayTwo : IPuzzleDay
                     )));
 
         return new PuzzleResult(2, horizontalPosition * depth);
-    }
-
-    private static PuzzleResult GetPuzzleOneResult(IList<IInstruction> instructions)
-    {
-        var (horizontalPosition, depth) = instructions.Aggregate(
-            (0, 0),
-            ((double HorizontalPosition, double Depth) position, IInstruction instruction) =>
-                instruction.Match(
-                    up => (position.HorizontalPosition, position.Depth - up.Change),
-                    down => (position.HorizontalPosition, position.Depth + down.Change),
-                    forward => (position.HorizontalPosition + forward.Change, position.Depth)));
-
-        return new PuzzleResult(1, horizontalPosition * depth);
     }
 
     private static IList<IInstruction> GetParsedInput() => FileProvider
