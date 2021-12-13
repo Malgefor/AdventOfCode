@@ -13,4 +13,9 @@ public record PuzzleResult(int PuzzleNumber, string PuzzleAnswer)
         : this(puzzleNumber, puzzleAnswer.ToString(CultureInfo.InvariantCulture))
     {
     }
+
+    public PuzzleResult(int puzzleNumber, long puzzleAnswer)
+        : this(puzzleNumber, puzzleAnswer.ToString(CultureInfo.InvariantCulture))
+    {
+    }
 }

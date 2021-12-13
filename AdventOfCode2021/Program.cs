@@ -1,12 +1,15 @@
 ﻿// @formatter:off
 
+using System.Diagnostics;
+
 using AdventOfCode2021;
 
 using LanguageExt;
 
 (from puzzleDay in GetAllPuzzleDays()
+ let timer = Stopwatch.StartNew()
  from answer in puzzleDay.PuzzleResults()
- select LogResult(puzzleDay.GetType().Name, answer))
+ select LogResult(puzzleDay.GetType().Name, answer, timer.Elapsed))
 .Sequence()
 .RunUnit();
 
@@ -18,10 +21,10 @@ IEnumerable<IPuzzleDay?> GetAllPuzzleDays() => typeof(Program)
     .Where(type => typeof(IPuzzleDay).IsAssignableFrom(type) && !type.IsAbstract)
     .Select(type => Activator.CreateInstance(type) as IPuzzleDay);
 
-Eff<Unit> LogResult(string puzzleDayName, PuzzleResult puzzleResult)
+Eff<Unit> LogResult(string puzzleDayName, PuzzleResult puzzleResult, TimeSpan elapsedMilliseconds)
 {
     Console.WriteLine($"---{puzzleDayName}---");
-    Console.WriteLine($"Answer to puzzle {puzzleResult.PuzzleNumber}: {puzzleResult.PuzzleAnswer}");
+    Console.WriteLine($"Answer to puzzle {puzzleResult.PuzzleNumber}: {puzzleResult.PuzzleAnswer}; Calculated in {elapsedMilliseconds:G}");
     Console.WriteLine();
 
     return Eff<Unit>.Success(Unit.Default);
