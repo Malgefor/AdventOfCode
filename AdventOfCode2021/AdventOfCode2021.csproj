@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Day10\input.txt" />
     <None Remove="Day9\input.txt" />
     <None Remove="Day8\input.txt" />
     <None Remove="Day7\input.txt" />
@@ -20,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Day10\input.txt" />
     <EmbeddedResource Include="Day9\input.txt" />
     <EmbeddedResource Include="Day8\input.txt" />
     <EmbeddedResource Include="Day7\input.txt" />
@@ -34,6 +36,7 @@
   <ItemGroup>
     <PackageReference Include="LanguageExt.CodeGen" Version="4.0.3" />
     <PackageReference Include="LanguageExt.Core" Version="4.0.3" />
+    <PackageReference Include="LanguageExt.Parsec" Version="4.0.3" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0" />
     <PackageReference Include="CodeGeneration.Roslyn.BuildTime" Version="0.6.1" PrivateAssets="all" />
     <DotNetCliToolReference Include="dotnet-codegen" Version="0.6.1" />

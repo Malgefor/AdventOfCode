@@ -14,7 +14,6 @@ public class DayNine : IPuzzleDay
                         FindPositionAt(input, position.Key with { XPosition = position.Key.YPosition + 1 }),
                         FindPositionAt(input, position.Key with { XPosition = position.Key.XPosition - 1 }),
                         FindPositionAt(input, position.Key with { XPosition = position.Key.XPosition + 1 }))
-                    .Memo()
                     .All(adjacentPosition => adjacentPosition.Value > position.Value.Value))
             .ToSeq();
 
