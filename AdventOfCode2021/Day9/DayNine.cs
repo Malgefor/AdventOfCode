@@ -6,70 +6,60 @@ public class DayNine : IPuzzleDay
 {
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
-        var input = GetParsedInput()
-            .Filter(position => position.Value != 9);
+        var input = GetParsedInput();
 
         var lowPoints = input.Filter(
-            position => FlattenOptionsToSequence(
-                    FindLeftOfPosition(input, position),
-                    FindRightOfPosition(input, position),
-                    FindAboveOfPosition(input, position),
-                    FindBelowOfPosition(input, position))
-                .Memo()
-                .All(adjacentPosition => adjacentPosition.Value > position.Value));
+                position => FlattenOptionsToSequence(
+                        FindPositionAt(input, position.Key with { XPosition = position.Key.YPosition - 1 }),
+                        FindPositionAt(input, position.Key with { XPosition = position.Key.YPosition + 1 }),
+                        FindPositionAt(input, position.Key with { XPosition = position.Key.XPosition - 1 }),
+                        FindPositionAt(input, position.Key with { XPosition = position.Key.XPosition + 1 }))
+                    .Memo()
+                    .All(adjacentPosition => adjacentPosition.Value > position.Value.Value))
+            .ToSeq();
 
-        var riskScore = lowPoints.Sum(position => position.Value + 1);
+        var riskScore = lowPoints.Sum(position => position.Value.Value + 1);
         yield return new PuzzleResult(1, riskScore);
 
         var productOfLargestBasins = lowPoints
-            .Aggregate<Position, (Seq<Position>, Seq<int>), Seq<int>>(
-                (input, Seq.empty<int>()),
-                ((Seq<Position> input, Seq<int> basinScores) accumulatedValues, Position lowPoint) =>
-                {
-                    var basinResult = Dfs(lowPoint, accumulatedValues.input);
-                    return (basinResult.Input, accumulatedValues.basinScores.Add(basinResult.Value));
-                },
-                result => result.Item2)
-            .OrderByDescending(basinScore => basinScore)
+            .Map(pair => Dfs(pair.Value, input))
+            .OrderByDescending(basinScore => basinScore.Value)
             .Take(3)
-            .Reduce((reducer, nextValue) => reducer * nextValue);
+            .Fold(1, (reducer, nextValue) => reducer * nextValue.Value);
 
         yield return new PuzzleResult(2, productOfLargestBasins);
     }
 
-    private static Option<Position> FindBelowOfPosition(Seq<Position> input, Position position) => input.Find(
-        inputPosition => inputPosition.XPosition == position.XPosition + 1
-                         && inputPosition.YPosition == position.YPosition);
-
-    private static Option<Position> FindAboveOfPosition(Seq<Position> input, Position position) => input.Find(
-        inputPosition => inputPosition.XPosition == position.XPosition - 1
-                         && inputPosition.YPosition == position.YPosition);
-
-    private static Option<Position> FindRightOfPosition(Seq<Position> input, Position position) => input.Find(
-        inputPosition => inputPosition.YPosition == position.YPosition + 1
-                         && inputPosition.XPosition == position.XPosition);
-
-    private static Option<Position> FindLeftOfPosition(Seq<Position> input, Position position) => input.Find(
-        inputPosition => inputPosition.YPosition == position.YPosition - 1
-                         && inputPosition.XPosition == position.XPosition);
-
-    private static (Position CurrentPosition, int Value, Seq<Position> Input) Dfs(
-        Position currentPosition,
-        Seq<Position> input)
+    private static Option<Position> FindPositionAt(
+        IReadOnlyDictionary<Coordinate, Position> input,
+        Coordinate toBeCheckedCoordinate)
     {
-        var leftoverPositionsWithoutCurrent = input.Except(Prelude.Seq1(currentPosition)).ToSeq();
+        return input.TryGetValue(toBeCheckedCoordinate, out var result)
+            ? Prelude.Some(result)
+            : Prelude.None;
+    }
+
+    private static (Position CurrentPosition, int Value, Dictionary<Coordinate, Position> Input) Dfs(
+        Position currentPosition,
+        Dictionary<Coordinate, Position> input)
+    {
+        input.Remove(currentPosition.Coordinate);
 
         var leftOfPosition = TryExplore(
-            tobeExpoloredPositions => FindLeftOfPosition(tobeExpoloredPositions, currentPosition),
-            leftoverPositionsWithoutCurrent);
+            tobeExpoloredPositions => FindPositionAt(
+                tobeExpoloredPositions,
+                currentPosition.Coordinate with { XPosition = currentPosition.Coordinate.YPosition - 1 }),
+            input);
 
         var setOfUncheckedPositionsAfterLeft = leftOfPosition
             .Match(
                 tuple => tuple.Input,
-                () => leftoverPositionsWithoutCurrent);
+                () => input);
 
         var rightOfPosition = TryExplore(
-            tobeExpoloredPositions => FindRightOfPosition(tobeExpoloredPositions, currentPosition),
+            tobeExpoloredPositions => FindPositionAt(
+                tobeExpoloredPositions,
+                currentPosition.Coordinate with { XPosition = currentPosition.Coordinate.YPosition + 1 }),
             setOfUncheckedPositionsAfterLeft);
 
         var setOfUncheckedPositionsAfterRight = rightOfPosition
@@ -78,7 +68,9 @@ public class DayNine : IPuzzleDay
                 () => setOfUncheckedPositionsAfterLeft);
 
         var aboveOfPosition = TryExplore(
-            tobeExpoloredPositions => FindAboveOfPosition(tobeExpoloredPositions, currentPosition),
+            tobeExpoloredPositions => FindPositionAt(
+                tobeExpoloredPositions,
+                currentPosition.Coordinate with { XPosition = currentPosition.Coordinate.XPosition - 1 }),
             setOfUncheckedPositionsAfterRight);
 
         var setOfUncheckedPositionsAfterAbove = aboveOfPosition
@@ -87,7 +79,9 @@ public class DayNine : IPuzzleDay
                 () => setOfUncheckedPositionsAfterRight);
 
         var belowOfPosition = TryExplore(
-            tobeExpoloredPositions => FindBelowOfPosition(tobeExpoloredPositions, currentPosition),
+            tobeExpoloredPositions => FindPositionAt(
+                tobeExpoloredPositions,
+                currentPosition.Coordinate with { XPosition = currentPosition.Coordinate.XPosition + 1 }),
             setOfUncheckedPositionsAfterAbove);
 
         var setOfUncheckedPositionsAfterBelow = belowOfPosition.Match(
@@ -104,7 +98,7 @@ public class DayNine : IPuzzleDay
         return (currentPosition, currentPositionValue + 1, setOfUncheckedPositionsAfterBelow);
     }
 
-    private static Seq<Position> GetParsedInput()
+    private static Dictionary<Coordinate, Position> GetParsedInput()
     {
         return FileProvider
             .GetAllLines("Day9.input.txt")
@@ -114,18 +108,20 @@ public class DayNine : IPuzzleDay
                     return lineOfPosition
                         .Map(
                             (columnIndex, valueOfPosition) => new Position(
-                                rowIndex,
-                                columnIndex,
+                                new Coordinate(
+                                    rowIndex,
+                                    columnIndex),
                                 int.Parse(valueOfPosition.ToString())))
-                        .ToSeq();
+                        .ToDictionary(position => position.Coordinate, position2 => position2);
                 })
             .Bind(seq => seq)
-            .ToSeq();
+            .Filter(keyValuePair => keyValuePair.Value.Value != 9)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
     }
 
-    private static Option<(Position CurrentPosition, int Value, Seq<Position> Input)> TryExplore(
-        Func<Seq<Position>, Option<Position>> possiblePosition,
-        Seq<Position> toBeExploredPositions)
+    private static Option<(Position CurrentPosition, int Value, Dictionary<Coordinate, Position> Input)> TryExplore(
+        Func<Dictionary<Coordinate, Position>, Option<Position>> possiblePosition,
+        Dictionary<Coordinate, Position> toBeExploredPositions)
     {
         return possiblePosition(toBeExploredPositions)
             .Map(
@@ -136,7 +132,9 @@ public class DayNine : IPuzzleDay
                 });
     }
 
-    private record Position(int XPosition, int YPosition, int Value);
+    private record Position(Coordinate Coordinate, int Value);
+
+    private record Coordinate(int XPosition, int YPosition);
 
     private static Seq<T> FlattenOptionsToSequence<T>(params Option<T>[] values)
     {
