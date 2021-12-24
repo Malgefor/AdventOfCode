@@ -8,6 +8,8 @@ namespace AdventOfCode2021.Day10;
 
 public class DayTen : IPuzzleDay
 {
+    public int DayNumber => 10;
+
     private static readonly Dictionary<string, int> PuzzleOneScoreMapping = new()
     {
         { ")", 3 },
@@ -52,7 +54,7 @@ public class DayTen : IPuzzleDay
                                 return (score, (newLineState, parse(parser, newLineState)));
                             },
                             valueTuple => !valueTuple.lineAndResult.parserResult.IsFaulted)
-                        .Map(valueTuple => valueTuple.Item1);
+                        .Map(values => values.Item1);
                 })
             .GetMedian();
 

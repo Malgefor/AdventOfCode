@@ -4,6 +4,8 @@ namespace AdventOfCode2021.Day8;
 
 public class DayEight : IPuzzleDay
 {
+    public int DayNumber => 8;
+
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var inputLines = GetParsedInput();

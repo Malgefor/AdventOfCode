@@ -4,6 +4,8 @@ namespace AdventOfCode2021.Day6;
 
 public class DaySix : IPuzzleDay
 {
+    public int DayNumber => 6;
+
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var initialLanternFishes = GetParsedInput();

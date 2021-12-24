@@ -6,7 +6,7 @@ using AdventOfCode2021;
 
 using LanguageExt;
 
-(from puzzleDay in GetAllPuzzleDays()
+(from puzzleDay in AllPuzzleDays()
  let timer = Stopwatch.StartNew()
  from answer in puzzleDay.PuzzleResults()
  select LogResult(puzzleDay.GetType().Name, answer, timer.Elapsed))
@@ -15,11 +15,12 @@ using LanguageExt;
 
 Console.ReadKey();
 
-IEnumerable<IPuzzleDay?> GetAllPuzzleDays() => typeof(Program)
+IEnumerable<IPuzzleDay?> AllPuzzleDays() => typeof(Program)
     .Assembly
     .GetTypes()
     .Where(type => typeof(IPuzzleDay).IsAssignableFrom(type) && !type.IsAbstract)
-    .Select(type => Activator.CreateInstance(type) as IPuzzleDay);
+    .Select(type => Activator.CreateInstance(type) as IPuzzleDay)
+    .OrderBy(day => day.DayNumber);
 
 Eff<Unit> LogResult(string puzzleDayName, PuzzleResult puzzleResult, TimeSpan elapsedMilliseconds)
 {

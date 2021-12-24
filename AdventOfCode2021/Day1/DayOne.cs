@@ -2,6 +2,8 @@
 
 public class DayOne : IPuzzleDay
 {
+    public int DayNumber => 1;
+
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var parsedInput = GetParsedInput();
