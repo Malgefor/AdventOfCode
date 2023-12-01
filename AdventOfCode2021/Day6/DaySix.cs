@@ -1,4 +1,6 @@
-﻿using LanguageExt;
+﻿using AdventOfCode.Generic;
+
+using LanguageExt;
 
 namespace AdventOfCode2021.Day6;
 
@@ -34,10 +36,13 @@ public class DaySix : IPuzzleDay
             .Sum(tuple => tuple.AmountOfFishes);
     }
 
-    private static Seq<(int, long)> GetParsedInput() => FileProvider
-        .GetAllLines("Day6.input.txt", ",")
-        .Map(int.Parse)
-        .GroupBy(fish => fish)
-        .Map(fishes => (fishes.Key, fishes.LongCount()))
-        .ToSeq();
+    private static Seq<(int, long)> GetParsedInput()
+    {
+        return FileProvider
+            .GetAllLines("Day6.input.txt", ",")
+            .Map(int.Parse)
+            .GroupBy(fish => fish)
+            .Map(fishes => (fishes.Key, fishes.LongCount()))
+            .ToSeq();
+    }
 }

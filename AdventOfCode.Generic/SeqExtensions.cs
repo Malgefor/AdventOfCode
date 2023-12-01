@@ -1,6 +1,6 @@
 ﻿using LanguageExt;
 
-namespace AdventOfCode2021;
+namespace AdventOfCode.Generic;
 
 public static class SeqExtensions
 {

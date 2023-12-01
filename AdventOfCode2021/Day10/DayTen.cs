@@ -1,4 +1,6 @@
-﻿using LanguageExt;
+﻿using AdventOfCode.Generic;
+
+using LanguageExt;
 using LanguageExt.Parsec;
 
 using static LanguageExt.Parsec.Prim;
@@ -33,7 +35,9 @@ public class DayTen : IPuzzleDay
         var faultedLines = GetParsedInput()
             .Map(line => (line, parserResult: parse(parser, line)))
             .Filter(parserResult => parserResult.Item2.IsFaulted)
-            .Map(lineAndResult => (lineAndResult, puzzleScore: TryGetPuzzleOneScore(lineAndResult.Item2.Reply.Error.Msg)));
+            .Map(
+                lineAndResult => (lineAndResult,
+                    puzzleScore: TryGetPuzzleOneScore(lineAndResult.Item2.Reply.Error.Msg)));
 
         yield return new PuzzleResult(1, faultedLines.Bind(tuple => tuple.puzzleScore).Sum());
 
@@ -61,27 +65,43 @@ public class DayTen : IPuzzleDay
         yield return new PuzzleResult(2, medianScoreOfIncompleteLines);
     }
 
-    private static Parser<char> GetCharacterParsingOptions() => choice(
-        GetCharacterSetParser('(', ')'),
-        GetCharacterSetParser('{', '}'),
-        GetCharacterSetParser('[', ']'),
-        GetCharacterSetParser('<', '>'));
+    private static Parser<char> GetCharacterParsingOptions()
+    {
+        return choice(
+            GetCharacterSetParser('(', ')'),
+            GetCharacterSetParser('{', '}'),
+            GetCharacterSetParser('[', ']'),
+            GetCharacterSetParser('<', '>'));
+    }
 
-    private static Parser<char> GetCharacterSetParser(char startChar, char endChar) =>
-        from start in ch(startChar)
-        from intermediate in many(GetCharacterParsingOptions())
-        from end in either(ch(endChar), endOfLine)
-        select end;
+    private static Parser<char> GetCharacterSetParser(char startChar, char endChar)
+    {
+        return
+            from start in ch(startChar)
+            from intermediate in many(GetCharacterParsingOptions())
+            from end in either(ch(endChar), endOfLine)
+            select end;
+    }
 
-    private static string GetMissingCharFromParseResult(ParserResult<Seq<char>> parseResult) =>
-        parseResult.Reply.Error.Expected[4].Replace("\'", string.Empty);
+    private static string GetMissingCharFromParseResult(ParserResult<Seq<char>> parseResult)
+    {
+        return parseResult.Reply.Error.Expected[4].Replace("\'", string.Empty);
+    }
 
-    private static double CalculateNewScore(double score, string missingChar) =>
-        score * 5 + TryGetPuzzleTwoScore(missingChar).Match(value => value, () => 0);
+    private static double CalculateNewScore(double score, string missingChar)
+    {
+        return score * 5 + TryGetPuzzleTwoScore(missingChar).Match(value => value, () => 0);
+    }
 
-    private static Option<int> TryGetPuzzleOneScore(string input) => TryGetPuzzleScore(input, PuzzleOneScoreMapping);
+    private static Option<int> TryGetPuzzleOneScore(string input)
+    {
+        return TryGetPuzzleScore(input, PuzzleOneScoreMapping);
+    }
 
-    private static Option<int> TryGetPuzzleTwoScore(string input) => TryGetPuzzleScore(input, PuzzleTwoScoreMapping);
+    private static Option<int> TryGetPuzzleTwoScore(string input)
+    {
+        return TryGetPuzzleScore(input, PuzzleTwoScoreMapping);
+    }
 
     private static Option<int> TryGetPuzzleScore(string input, Dictionary<string, int> mapping)
     {
@@ -91,5 +111,8 @@ public class DayTen : IPuzzleDay
             : Prelude.None;
     }
 
-    private static Seq<string> GetParsedInput() => FileProvider.GetAllLines("Day10.input.txt");
+    private static Seq<string> GetParsedInput()
+    {
+        return FileProvider.GetAllLines("Day10.input.txt");
+    }
 }

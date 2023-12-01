@@ -1,4 +1,6 @@
-﻿using LanguageExt;
+﻿using AdventOfCode.Generic;
+
+using LanguageExt;
 
 using static LanguageExt.Prelude;
 
@@ -25,8 +27,12 @@ public class DayThree : IPuzzleDay
                     .Zip(input, (currentOneCount, binaryBit) => currentOneCount + binaryBit));
 
         var halfOfTotalValueCount = parsedInput.Count / 2;
-        var epsilon = GetDecimalRepresentationOfBinaryNumber(sumsPerColumn, sumValue => sumValue >= halfOfTotalValueCount);
-        var gamma = GetDecimalRepresentationOfBinaryNumber(sumsPerColumn, sumValue => sumValue <= halfOfTotalValueCount);
+        var epsilon = GetDecimalRepresentationOfBinaryNumber(
+            sumsPerColumn,
+            sumValue => sumValue >= halfOfTotalValueCount);
+        var gamma = GetDecimalRepresentationOfBinaryNumber(
+            sumsPerColumn,
+            sumValue => sumValue <= halfOfTotalValueCount);
 
         return new PuzzleResult(1, epsilon * gamma);
     }
@@ -78,7 +84,8 @@ public class DayThree : IPuzzleDay
 
                             return compareFunc(onesCount, zeroesCount)
                                 ? binaryWithPositions.Filter(tuple => tuple.Item2 == 1).Map(tuple => tuple.binaryNumber)
-                                : binaryWithPositions.Filter(tuple => tuple.Item2 == 0).Map(tuple => tuple.binaryNumber);
+                                : binaryWithPositions.Filter(tuple => tuple.Item2 == 0)
+                                    .Map(tuple => tuple.binaryNumber);
                         });
                 },
                 finalValues => finalValues
@@ -95,7 +102,10 @@ public class DayThree : IPuzzleDay
             .TransformBinaryToDecimal();
     }
 
-    private static Seq<Seq<int>> GetParsedInput() => FileProvider
-        .GetAllLines("Day3.input.txt")
-        .Map(value => value.Map(c => int.Parse(c.ToString())).ToSeq());
+    private static Seq<Seq<int>> GetParsedInput()
+    {
+        return FileProvider
+            .GetAllLines("Day3.input.txt")
+            .Map(value => value.Map(c => int.Parse(c.ToString())).ToSeq());
+    }
 }

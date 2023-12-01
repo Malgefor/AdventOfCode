@@ -1,4 +1,6 @@
-﻿using LanguageExt;
+﻿using AdventOfCode.Generic;
+
+using LanguageExt;
 
 namespace AdventOfCode2021.Day7;
 
@@ -58,8 +60,11 @@ public class DaySeven : IPuzzleDay
         return new PuzzleResult(2, sumOfDistancesToBestPosition);
     }
 
-    private static Seq<int> GetParsedInput() => FileProvider
-        .GetAllLines("Day7.input.txt", ",")
-        .Map(int.Parse)
-        .ToSeq();
+    private static Seq<int> GetParsedInput()
+    {
+        return FileProvider
+            .GetAllLines("Day7.input.txt", ",")
+            .Map(int.Parse)
+            .ToSeq();
+    }
 }

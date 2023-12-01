@@ -1,4 +1,6 @@
-﻿using LanguageExt;
+﻿using AdventOfCode.Generic;
+
+using LanguageExt;
 
 namespace AdventOfCode2021.Day4;
 

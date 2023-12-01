@@ -1,4 +1,6 @@
-﻿using LanguageExt;
+﻿using AdventOfCode.Generic;
+
+using LanguageExt;
 
 namespace AdventOfCode2021.Day11;
 
@@ -81,23 +83,28 @@ public class DayEleven : IPuzzleDay
             .Concat(otherOctopuses);
     }
 
-    private static Seq<Octopus> IncrementEnergyOfOctopuses(Seq<Octopus> currentStateOfOctopuses) =>
-        currentStateOfOctopuses.Map(octopus => octopus with { EnergyLevel = octopus.EnergyLevel + 1 });
+    private static Seq<Octopus> IncrementEnergyOfOctopuses(Seq<Octopus> currentStateOfOctopuses)
+    {
+        return currentStateOfOctopuses.Map(octopus => octopus with { EnergyLevel = octopus.EnergyLevel + 1 });
+    }
 
-    private static Seq<Octopus> GetParsedInput() => FileProvider
-        .GetAllLines("Day11.input.txt")
-        .Map(
-            (verticalIndex, line) =>
-            {
-                return line
-                    .Map(
-                        (horizontalIndex, octopusStartingValue) => new Octopus(
-                            horizontalIndex,
-                            verticalIndex,
-                            int.Parse(octopusStartingValue.ToString())));
-            })
-        .Bind(values => values)
-        .ToSeq();
+    private static Seq<Octopus> GetParsedInput()
+    {
+        return FileProvider
+            .GetAllLines("Day11.input.txt")
+            .Map(
+                (verticalIndex, line) =>
+                {
+                    return line
+                        .Map(
+                            (horizontalIndex, octopusStartingValue) => new Octopus(
+                                horizontalIndex,
+                                verticalIndex,
+                                int.Parse(octopusStartingValue.ToString())));
+                })
+            .Bind(values => values)
+            .ToSeq();
+    }
 
     private record Octopus(int XPos, int YPos, int EnergyLevel, bool HasFlashed = false)
     {
@@ -113,20 +120,44 @@ public class DayEleven : IPuzzleDay
                    || IsOnBottomRightDiagonalOf(other);
         }
 
-        private bool IsLeftOf(Octopus other) => this.YPos == other.YPos && this.XPos - 1 == other.XPos;
+        private bool IsLeftOf(Octopus other)
+        {
+            return this.YPos == other.YPos && this.XPos - 1 == other.XPos;
+        }
 
-        private bool IsRightOf(Octopus other) => this.YPos == other.YPos && this.XPos + 1 == other.XPos;
+        private bool IsRightOf(Octopus other)
+        {
+            return this.YPos == other.YPos && this.XPos + 1 == other.XPos;
+        }
 
-        private bool IsAboveOf(Octopus other) => this.YPos - 1 == other.YPos && this.XPos == other.XPos;
+        private bool IsAboveOf(Octopus other)
+        {
+            return this.YPos - 1 == other.YPos && this.XPos == other.XPos;
+        }
 
-        private bool IsBelowOf(Octopus other) => this.YPos + 1 == other.YPos && this.XPos == other.XPos;
+        private bool IsBelowOf(Octopus other)
+        {
+            return this.YPos + 1 == other.YPos && this.XPos == other.XPos;
+        }
 
-        private bool IsOnTopLeftDiagonalOf(Octopus other) => this.YPos - 1 == other.YPos && this.XPos - 1 == other.XPos;
+        private bool IsOnTopLeftDiagonalOf(Octopus other)
+        {
+            return this.YPos - 1 == other.YPos && this.XPos - 1 == other.XPos;
+        }
 
-        private bool IsOnTopRightDiagonalOf(Octopus other) => this.YPos - 1 == other.YPos && this.XPos + 1 == other.XPos;
+        private bool IsOnTopRightDiagonalOf(Octopus other)
+        {
+            return this.YPos - 1 == other.YPos && this.XPos + 1 == other.XPos;
+        }
 
-        private bool IsOnBottomLeftDiagonalOf(Octopus other) => this.YPos + 1 == other.YPos && this.XPos - 1 == other.XPos;
+        private bool IsOnBottomLeftDiagonalOf(Octopus other)
+        {
+            return this.YPos + 1 == other.YPos && this.XPos - 1 == other.XPos;
+        }
 
-        private bool IsOnBottomRightDiagonalOf(Octopus other) => this.YPos + 1 == other.YPos && this.XPos + 1 == other.XPos;
+        private bool IsOnBottomRightDiagonalOf(Octopus other)
+        {
+            return this.YPos + 1 == other.YPos && this.XPos + 1 == other.XPos;
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace AdventOfCode2021;
+namespace AdventOfCode.Generic;
 
 public record PuzzleResult(int PuzzleNumber, string PuzzleAnswer)
 {

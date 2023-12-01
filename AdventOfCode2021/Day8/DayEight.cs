@@ -1,4 +1,6 @@
-﻿using LanguageExt;
+﻿using AdventOfCode.Generic;
+
+using LanguageExt;
 
 namespace AdventOfCode2021.Day8;
 
@@ -15,7 +17,8 @@ public class DayEight : IPuzzleDay
                 line => line
                     .OutputValues
                     .Filter(
-                        outputValue => IsOne(outputValue) || IsFour(outputValue) || IsSeven(outputValue) || IsEight(outputValue)))
+                        outputValue => IsOne(outputValue) || IsFour(outputValue) || IsSeven(outputValue)
+                                       || IsEight(outputValue)))
             .Count;
 
         yield return new PuzzleResult(1, result);
@@ -39,7 +42,8 @@ public class DayEight : IPuzzleDay
 
                 var threeValue = line.UniqueCombinations
                     .Filter(value => value.Length == 5)
-                    .Filter(value => value.Contains(topValue) && value.Contains(bottomRight) && value.Contains(topRight))
+                    .Filter(
+                        value => value.Contains(topValue) && value.Contains(bottomRight) && value.Contains(topRight))
                     .First();
 
                 var topLeft = fourValue.Except(threeValue.ToSeq()).First();
@@ -67,26 +71,41 @@ public class DayEight : IPuzzleDay
         yield return new PuzzleResult(2, sumOfOutputValues.Sum(number => number));
     }
 
-    private static bool IsOne(string value) => value.Length == 2;
+    private static bool IsOne(string value)
+    {
+        return value.Length == 2;
+    }
 
-    private static bool IsFour(string value) => value.Length == 4;
+    private static bool IsFour(string value)
+    {
+        return value.Length == 4;
+    }
 
-    private static bool IsSeven(string value) => value.Length == 3;
+    private static bool IsSeven(string value)
+    {
+        return value.Length == 3;
+    }
 
-    private static bool IsEight(string value) => value.Length == 7;
+    private static bool IsEight(string value)
+    {
+        return value.Length == 7;
+    }
 
-    private static Seq<InputLine> GetParsedInput() => FileProvider
-        .GetAllLines("Day8.input.txt")
-        .Map(
-            inputString =>
-            {
-                var splitSegments = inputString.Split('|');
-                var uniqueCombinations = splitSegments.First().Trim().Split(" ").ToSeq();
-                var outputValues = splitSegments.Last().Trim().Split(" ").ToSeq();
+    private static Seq<InputLine> GetParsedInput()
+    {
+        return FileProvider
+            .GetAllLines("Day8.input.txt")
+            .Map(
+                inputString =>
+                {
+                    var splitSegments = inputString.Split('|');
+                    var uniqueCombinations = splitSegments.First().Trim().Split(" ").ToSeq();
+                    var outputValues = splitSegments.Last().Trim().Split(" ").ToSeq();
 
-                return new InputLine(uniqueCombinations, outputValues);
-            })
-        .ToSeq();
+                    return new InputLine(uniqueCombinations, outputValues);
+                })
+            .ToSeq();
+    }
 
     private record InputLine(Seq<string> UniqueCombinations, Seq<string> OutputValues);
 

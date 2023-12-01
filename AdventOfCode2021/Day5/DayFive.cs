@@ -1,4 +1,6 @@
-﻿using LanguageExt;
+﻿using AdventOfCode.Generic;
+
+using LanguageExt;
 
 namespace AdventOfCode2021.Day5;
 
@@ -9,7 +11,10 @@ public class DayFive : IPuzzleDay
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var allLines = GetParsedInput()
-            .Map(startAndEndPosition => Line.CreateLineFromStartAndEnd(startAndEndPosition.Item1, startAndEndPosition.Item2));
+            .Map(
+                startAndEndPosition => Line.CreateLineFromStartAndEnd(
+                    startAndEndPosition.Item1,
+                    startAndEndPosition.Item2));
 
         yield return new PuzzleResult(
             1,
@@ -22,33 +27,39 @@ public class DayFive : IPuzzleDay
                 allLines));
     }
 
-    private static int CountPositionsWithOccurrenceMoreThanOnce(Seq<Line> lines) => lines
-        .Bind(line => line.IntermediatePositions)
-        .GroupBy(position => position)
-        .Count(grouping => grouping.Count() > 1);
+    private static int CountPositionsWithOccurrenceMoreThanOnce(Seq<Line> lines)
+    {
+        return lines
+            .Bind(line => line.IntermediatePositions)
+            .GroupBy(position => position)
+            .Count(grouping => grouping.Count() > 1);
+    }
 
-    private static Seq<(Position, Position)> GetParsedInput() => FileProvider
-        .GetAllLines("Day5.input.txt")
-        .Map(
-            lineString =>
-            {
-                var positions = lineString
-                    .Split("->")
-                    .Map(
-                        positionString =>
-                        {
-                            var points = positionString
-                                .Trim()
-                                .Split(',')
-                                .Map(int.Parse)
-                                .ToSeq();
+    private static Seq<(Position, Position)> GetParsedInput()
+    {
+        return FileProvider
+            .GetAllLines("Day5.input.txt")
+            .Map(
+                lineString =>
+                {
+                    var positions = lineString
+                        .Split("->")
+                        .Map(
+                            positionString =>
+                            {
+                                var points = positionString
+                                    .Trim()
+                                    .Split(',')
+                                    .Map(int.Parse)
+                                    .ToSeq();
 
-                            return new Position(points.First(), points.Last);
-                        })
-                    .ToSeq();
+                                return new Position(points.First(), points.Last);
+                            })
+                        .ToSeq();
 
-                return (positions.First(), positions.Last);
-            });
+                    return (positions.First(), positions.Last);
+                });
+    }
 
     private record Line(Position Start, Position End, Seq<Position> IntermediatePositions)
     {
@@ -63,7 +74,10 @@ public class DayFive : IPuzzleDay
                     .ToSeq());
         }
 
-        public bool IsVerticalOrHorizontal() => this.Start.X == this.End.X || this.Start.Y == this.End.Y;
+        public bool IsVerticalOrHorizontal()
+        {
+            return this.Start.X == this.End.X || this.Start.Y == this.End.Y;
+        }
 
         private static Seq<int> GetIntermediatePositions(int start, int end)
         {

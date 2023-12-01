@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2021.Day1;
+﻿using AdventOfCode.Generic;
+
+namespace AdventOfCode2021.Day1;
 
 public class DayOne : IPuzzleDay
 {
@@ -18,13 +20,19 @@ public class DayOne : IPuzzleDay
         yield return new PuzzleResult(2, CountGreaterThanPrevious(tripleZips));
     }
 
-    private static int CountGreaterThanPrevious(IList<int> inputs) => inputs
-        .Zip(inputs.Skip(1))
-        .Select(tuple => tuple.Item2 > tuple.Item1)
-        .Count(boolValue => boolValue);
+    private static int CountGreaterThanPrevious(IList<int> inputs)
+    {
+        return inputs
+            .Zip(inputs.Skip(1))
+            .Select(tuple => tuple.Item2 > tuple.Item1)
+            .Count(boolValue => boolValue);
+    }
 
-    private static List<int> GetParsedInput() => FileProvider
-        .GetAllLines("Day1.input.txt")
-        .Select(int.Parse)
-        .ToList();
+    private static List<int> GetParsedInput()
+    {
+        return FileProvider
+            .GetAllLines("Day1.input.txt")
+            .Select(int.Parse)
+            .ToList();
+    }
 }

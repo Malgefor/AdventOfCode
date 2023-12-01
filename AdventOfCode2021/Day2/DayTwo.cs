@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2021.Day2;
+﻿using AdventOfCode.Generic;
+
+namespace AdventOfCode2021.Day2;
 
 public class DayTwo : IPuzzleDay
 {
@@ -42,21 +44,24 @@ public class DayTwo : IPuzzleDay
         return new PuzzleResult(2, horizontalPosition * depth);
     }
 
-    private static IList<IInstruction> GetParsedInput() => FileProvider
-        .GetAllLines("Day2.input.txt")
-        .Select(
-            stringValue =>
-            {
-                var split = stringValue.Split(" ");
-                var direction = split[0];
-                var change = double.Parse(split[1]);
-
-                return direction switch
+    private static IList<IInstruction> GetParsedInput()
+    {
+        return FileProvider
+            .GetAllLines("Day2.input.txt")
+            .Select(
+                stringValue =>
                 {
-                    "forward" => IInstructionCon.Forward(change),
-                    "down" => IInstructionCon.Down(change),
-                    "up" => IInstructionCon.Up(change)
-                };
-            })
-        .ToList();
+                    var split = stringValue.Split(" ");
+                    var direction = split[0];
+                    var change = double.Parse(split[1]);
+
+                    return direction switch
+                    {
+                        "forward" => IInstructionCon.Forward(change),
+                        "down" => IInstructionCon.Down(change),
+                        "up" => IInstructionCon.Up(change)
+                    };
+                })
+            .ToList();
+    }
 }
