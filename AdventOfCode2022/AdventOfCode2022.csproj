@@ -2,12 +2,7 @@
 
   <PropertyGroup>
 	  <OutputType>Exe</OutputType>
-	  <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-
 
   <ItemGroup>
     <None Remove="Day5\input.txt" />
@@ -18,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="LanguageExt.Core" Version="4.4.0" />
+	  <PackageReference Include="LanguageExt.Core" Version="4.4.7" />
   </ItemGroup>
 
   <ItemGroup>

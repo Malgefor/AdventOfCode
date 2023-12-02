@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Day1\input.txt" />
+    <EmbeddedResource Include="Day2\input.txt" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Humanizer.Core" Version="2.14.1" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.7" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\AdventOfCode.Generic\AdventOfCode.Generic.csproj" />
+  </ItemGroup>
+</Project>
