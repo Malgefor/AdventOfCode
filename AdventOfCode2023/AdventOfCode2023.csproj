@@ -11,6 +11,7 @@
     <EmbeddedResource Include="Day4\input.txt" />
     <EmbeddedResource Include="Day5\input.txt" />
     <EmbeddedResource Include="Day6\input.txt" />
+    <EmbeddedResource Include="Day7\input.txt" />
   </ItemGroup>
   
   <ItemGroup>
@@ -34,6 +35,9 @@
       <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
     </Compile>
     <Compile Update="Day6\DaySix.cs">
+      <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
+    </Compile>
+    <Compile Update="Day7\DaySeven.cs">
       <Generator>MSBuild:GenerateCodeFromAttributes</Generator>
     </Compile>
   </ItemGroup>
