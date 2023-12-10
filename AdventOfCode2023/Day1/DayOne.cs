@@ -8,8 +8,6 @@ namespace AdventOfCode2023.Day1;
 
 public class DayOne : IPuzzleDay
 {
-    public int DayNumber => 1;
-
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var resultPuzzleOne = GetParsedInput()

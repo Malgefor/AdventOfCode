@@ -6,8 +6,6 @@ namespace AdventOfCode2022.Day1;
 
 public class DayOne : IPuzzleDay
 {
-    public int DayNumber => 1;
-
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var summedInput = GetParsedInput().Map(x => x.Sum());

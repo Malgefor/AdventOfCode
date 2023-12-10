@@ -6,8 +6,6 @@ namespace AdventOfCode2021.Day11;
 
 public class DayEleven : IPuzzleDay
 {
-    public int DayNumber => 11;
-
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var octopuses = GetParsedInput();

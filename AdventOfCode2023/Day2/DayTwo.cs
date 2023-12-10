@@ -6,8 +6,6 @@ namespace AdventOfCode2023.Day2;
 
 public class DayTwo : IPuzzleDay
 {
-    public int DayNumber => 2;
-
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var maxCounts = new[]

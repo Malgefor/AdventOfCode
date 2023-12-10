@@ -6,8 +6,6 @@ namespace AdventOfCode2021.Day5;
 
 public class DayFive : IPuzzleDay
 {
-    public int DayNumber => 5;
-
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var allLines = GetParsedInput()

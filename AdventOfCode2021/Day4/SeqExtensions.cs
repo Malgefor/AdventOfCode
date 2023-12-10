@@ -24,7 +24,9 @@ public static class SeqExtensions
                                     NumbersOnBoard = card.NumbersOnBoard
                                         .Filter(numberOnCard => numberOnCard.Number == bingoNumber)
                                         .Map(number => number with { IsChecked = true })
-                                        .Concat(card.NumbersOnBoard.Filter(numberOnCard => numberOnCard.Number != bingoNumber)),
+                                        .Concat(
+                                            card.NumbersOnBoard.Filter(
+                                                numberOnCard => numberOnCard.Number != bingoNumber)),
                                     LastCheckedNumber = bingoNumber
                                 };
                             }

@@ -10,8 +10,6 @@ namespace AdventOfCode2021.Day10;
 
 public class DayTen : IPuzzleDay
 {
-    public int DayNumber => 10;
-
     private static readonly Dictionary<string, int> PuzzleOneScoreMapping = new()
     {
         { ")", 3 },

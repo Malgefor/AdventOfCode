@@ -6,8 +6,6 @@ namespace AdventOfCode2022.Day2;
 
 public class DayTwo : IPuzzleDay
 {
-    public int DayNumber => 2;
-
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var input = GetParsedInput();
@@ -68,7 +66,7 @@ public class DayTwo : IPuzzleDay
             .Map(x => new Prediction(x.First(), x.Last()));
     }
 
-    private readonly struct Prediction
+    private struct Prediction
     {
         public Prediction(char opponent, char response)
         {
