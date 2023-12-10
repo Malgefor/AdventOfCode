@@ -21,7 +21,7 @@ public class DayEight : IPuzzleDay
                                        || IsEight(outputValue)))
             .Count;
 
-        yield return new PuzzleResult(1, result);
+        yield return new PuzzleResult(result);
 
         var sumOfOutputValues = inputLines.Map(
             line =>
@@ -68,7 +68,7 @@ public class DayEight : IPuzzleDay
                     .Reduce(ConcatIntegers);
             });
 
-        yield return new PuzzleResult(2, sumOfOutputValues.Sum(number => number));
+        yield return new PuzzleResult(sumOfOutputValues.Sum(number => number));
     }
 
     private static bool IsOne(string value)
@@ -94,7 +94,7 @@ public class DayEight : IPuzzleDay
     private static Seq<InputLine> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day8.input.txt")
+            .GetAllLines()
             .Map(
                 inputString =>
                 {

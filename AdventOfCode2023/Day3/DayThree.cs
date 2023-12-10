@@ -63,7 +63,7 @@ public class DayThree : IPuzzleDay
             .Flatten()
             .Sum(x => x.Number);
 
-        yield return new PuzzleResult(1, resultPuzzleOne);
+        yield return new PuzzleResult(resultPuzzleOne);
 
         var puzzleTwoResult = parsedInput
             .Map(
@@ -95,7 +95,7 @@ public class DayThree : IPuzzleDay
             .Flatten()
             .Sum();
 
-        yield return new PuzzleResult(2, puzzleTwoResult);
+        yield return new PuzzleResult(puzzleTwoResult);
     }
 
     private static Seq<Symbol> GetSymbols(Seq<ISchematicOption> line)
@@ -112,7 +112,7 @@ public class DayThree : IPuzzleDay
                   || (partNumberIndex != 140 && partNumberIndex + 1 == symbol.Index));
 
     private static Seq<Seq<ISchematicOption>> GetParsedInput() => FileProvider
-        .GetAllLines("Day3.input.txt")
+        .GetAllLines()
         .Map(
             (index, line) =>
             {

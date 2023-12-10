@@ -39,7 +39,7 @@ public class DayTen : IPuzzleDay
                 lineAndResult => (lineAndResult,
                     puzzleScore: TryGetPuzzleOneScore(lineAndResult.Item2.Reply.Error.Msg)));
 
-        yield return new PuzzleResult(1, faultedLines.Bind(tuple => tuple.puzzleScore).Sum());
+        yield return new PuzzleResult(faultedLines.Bind(tuple => tuple.puzzleScore).Sum());
 
         var medianScoreOfIncompleteLines = faultedLines
             .Filter(tuple => tuple.puzzleScore.IsNone)
@@ -62,7 +62,7 @@ public class DayTen : IPuzzleDay
                 })
             .GetMedian();
 
-        yield return new PuzzleResult(2, medianScoreOfIncompleteLines);
+        yield return new PuzzleResult(medianScoreOfIncompleteLines);
     }
 
     private static Parser<char> GetCharacterParsingOptions()
@@ -113,6 +113,6 @@ public class DayTen : IPuzzleDay
 
     private static Seq<string> GetParsedInput()
     {
-        return FileProvider.GetAllLines("Day10.input.txt");
+        return FileProvider.GetAllLines();
     }
 }

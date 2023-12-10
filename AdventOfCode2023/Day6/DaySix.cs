@@ -20,7 +20,7 @@ public class DaySix : IPuzzleDay
                     .CalculateWinningOptions(game.Head, game.Tail.Head))
             .Reduce((n1, n2) => n1 * n2);
 
-        yield return new PuzzleResult(1, puzzleOneAnswer);
+        yield return new PuzzleResult(puzzleOneAnswer);
 
         var theGame = parsedInput
             .Fold(
@@ -34,13 +34,13 @@ public class DaySix : IPuzzleDay
             .RangeLong(0, gameLength)
             .CalculateWinningOptions(gameLength, gameRecord);
 
-        yield return new PuzzleResult(2, puzzleAnswerTwo);
+        yield return new PuzzleResult(puzzleAnswerTwo);
     }
 
     private static Seq<Seq<int>> GetParsedInput()
     {
         var numbers = FileProvider
-            .GetAllLines("Day6.input.txt")
+            .GetAllLines()
             .Map(
                 line =>
                 {

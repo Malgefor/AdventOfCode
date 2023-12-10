@@ -1,22 +1,24 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 
 using LanguageExt;
-
-using Microsoft.Extensions.FileProviders;
 
 namespace AdventOfCode.Generic;
 
 public class FileProvider
 {
-    //TODO: use Eff<IEnumerable<string>>
-    public static Seq<string> GetAllLines(string filename, string splitOn = "\r\n")
+    public static Seq<string> GetAllLines(string splitOn = "\r\n")
     {
-        var fileProvider = new EmbeddedFileProvider(Assembly.GetCallingAssembly());
-        var inputStream = fileProvider
-            .GetFileInfo(filename)
-            .CreateReadStream();
+        var stackFrame = new StackFrame(1);
+        var callingMethod = stackFrame.GetMethod();
+        var callingClassType = callingMethod!.DeclaringType;
+        var callingAssembly = Assembly.GetCallingAssembly();
+        var inputFilePath = callingAssembly
+            .GetManifestResourceNames()
+            .First(x => x.EndsWith(callingClassType.Namespace + ".input.txt"));
+        var resourceStream = callingAssembly.GetManifestResourceStream(inputFilePath);
 
-        using var reader = new StreamReader(inputStream);
+        using var reader = new StreamReader(resourceStream);
 
         return reader
             .ReadToEnd()

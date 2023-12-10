@@ -16,7 +16,7 @@ public class DayTwo : IPuzzleDay
 
         var puzzleTwoAnswer = input.Map(ToExpectedHand).Map(CalculateScore).Sum();
 
-        return new[] { new PuzzleResult(1, puzzleOneAnswer), new PuzzleResult(2, puzzleTwoAnswer) };
+        return new[] { new PuzzleResult(puzzleOneAnswer), new PuzzleResult(puzzleTwoAnswer) };
     }
 
     private static Prediction ToExpectedHand(Prediction x)
@@ -63,7 +63,7 @@ public class DayTwo : IPuzzleDay
     private static Seq<Prediction> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day2.input.txt")
+            .GetAllLines()
             .Map(x => x.Split(" ").Filter(y => !string.IsNullOrWhiteSpace(y)).Select(y => y.First()).ToSeq())
             .Map(x => new Prediction(x.First(), x.Last()));
     }

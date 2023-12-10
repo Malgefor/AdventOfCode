@@ -28,7 +28,7 @@ public class DaySeven : IPuzzleDay
         var totalFuelCost = horizontalCrabPositions
             .Sum(position => Math.Abs(median - position));
 
-        return new PuzzleResult(1, totalFuelCost);
+        return new PuzzleResult(totalFuelCost);
     }
 
     private static PuzzleResult GetPuzzleTwoResult(Seq<int> horizontalCrabPositions)
@@ -57,13 +57,13 @@ public class DaySeven : IPuzzleDay
                 })
             .Min();
 
-        return new PuzzleResult(2, sumOfDistancesToBestPosition);
+        return new PuzzleResult(sumOfDistancesToBestPosition);
     }
 
     private static Seq<int> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day7.input.txt", ",")
+            .GetAllLines(",")
             .Map(int.Parse)
             .ToSeq();
     }

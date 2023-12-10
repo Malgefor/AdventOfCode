@@ -20,7 +20,7 @@ public class DayFour : IPuzzleDay
             .Map(winningNumbersOnCard => Math.Pow(2, winningNumbersOnCard.Count - 1))
             .Sum();
 
-        yield return new PuzzleResult(1, puzzleOneAnswer);
+        yield return new PuzzleResult(puzzleOneAnswer);
 
         var puzzleTwoAnswer = parsedInput
             .Fold(
@@ -38,13 +38,13 @@ public class DayFour : IPuzzleDay
                 })
             .Sum(x => x.Value);
 
-        yield return new PuzzleResult(2, puzzleTwoAnswer);
+        yield return new PuzzleResult(puzzleTwoAnswer);
     }
 
     private record ScratchCard(int Id, Seq<int> WinningNumbers, Seq<int> CardNumbers);
 
     private static Seq<ScratchCard> GetParsedInput() => FileProvider
-        .GetAllLines("Day4.input.txt")
+        .GetAllLines()
         .Map(
             line =>
             {

@@ -2,20 +2,20 @@
 
 namespace AdventOfCode.Generic;
 
-public record PuzzleResult(int PuzzleNumber, string PuzzleAnswer)
+public record PuzzleResult(string PuzzleAnswer)
 {
-    public PuzzleResult(int puzzleNumber, int puzzleAnswer)
-        : this(puzzleNumber, puzzleAnswer.ToString())
+    public PuzzleResult(int puzzleAnswer)
+        : this(puzzleAnswer.ToString())
     {
     }
 
-    public PuzzleResult(int puzzleNumber, double puzzleAnswer)
-        : this(puzzleNumber, puzzleAnswer.ToString(CultureInfo.InvariantCulture))
+    public PuzzleResult(double puzzleAnswer)
+        : this(puzzleAnswer.ToString(CultureInfo.InvariantCulture))
     {
     }
 
-    public PuzzleResult(int puzzleNumber, long puzzleAnswer)
-        : this(puzzleNumber, puzzleAnswer.ToString(CultureInfo.InvariantCulture))
+    public PuzzleResult(long puzzleAnswer)
+        : this(puzzleAnswer.ToString(CultureInfo.InvariantCulture))
     {
     }
 }

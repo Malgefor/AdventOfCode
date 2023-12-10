@@ -4,6 +4,8 @@ using LanguageExt;
 
 using static LanguageExt.Prelude;
 
+using Seq = LanguageExt.Seq;
+
 namespace AdventOfCode2021.Day3;
 
 public class DayThree : IPuzzleDay
@@ -22,7 +24,7 @@ public class DayThree : IPuzzleDay
     {
         var sumsPerColumn = parsedInput
             .Fold(
-                LanguageExt.Seq.repeat(0, parsedInput.First().Count),
+                Seq.repeat(0, parsedInput.First().Count),
                 (oneCounts, input) => oneCounts
                     .Zip(input, (currentOneCount, binaryBit) => currentOneCount + binaryBit));
 
@@ -34,7 +36,7 @@ public class DayThree : IPuzzleDay
             sumsPerColumn,
             sumValue => sumValue <= halfOfTotalValueCount);
 
-        return new PuzzleResult(1, epsilon * gamma);
+        return new PuzzleResult(epsilon * gamma);
     }
 
     private static PuzzleResult GetPuzzleTwoResult(Seq<Seq<int>> parsedInput)
@@ -49,7 +51,7 @@ public class DayThree : IPuzzleDay
             (groupOfInts, groupOfInts2) => groupOfInts < groupOfInts2,
             0);
 
-        return new PuzzleResult(2, numberWithTheMostCommonValues * numberWithTheLeastCommonValues);
+        return new PuzzleResult(numberWithTheMostCommonValues * numberWithTheLeastCommonValues);
     }
 
     private static long GetBinaryNumberInDecimal(
@@ -105,7 +107,7 @@ public class DayThree : IPuzzleDay
     private static Seq<Seq<int>> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day3.input.txt")
+            .GetAllLines()
             .Map(value => value.Map(c => int.Parse(c.ToString())).ToSeq());
     }
 }

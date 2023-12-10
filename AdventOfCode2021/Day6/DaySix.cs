@@ -12,8 +12,8 @@ public class DaySix : IPuzzleDay
     {
         var initialLanternFishes = GetParsedInput();
 
-        yield return new PuzzleResult(1, GetTotalFishesAfterDays(initialLanternFishes, 80));
-        yield return new PuzzleResult(2, GetTotalFishesAfterDays(initialLanternFishes, 256));
+        yield return new PuzzleResult(GetTotalFishesAfterDays(initialLanternFishes, 80));
+        yield return new PuzzleResult(GetTotalFishesAfterDays(initialLanternFishes, 256));
     }
 
     private static long GetTotalFishesAfterDays(Seq<(int DueInDays, long AmountOfFishes)> initialCountsOfFish, int days)
@@ -39,7 +39,7 @@ public class DaySix : IPuzzleDay
     private static Seq<(int, long)> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day6.input.txt", ",")
+            .GetAllLines(",")
             .Map(int.Parse)
             .GroupBy(fish => fish)
             .Map(fishes => (fishes.Key, fishes.LongCount()))

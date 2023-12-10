@@ -17,7 +17,7 @@ public class DayOne : IPuzzleDay
             .Map(int.Parse)
             .Sum();
 
-        yield return new PuzzleResult(1, resultPuzzleOne);
+        yield return new PuzzleResult(resultPuzzleOne);
 
         var parsedInput = GetParsedInput();
 
@@ -53,7 +53,7 @@ public class DayOne : IPuzzleDay
             .Map(int.Parse)
             .Sum();
 
-        yield return new PuzzleResult(2, resultPuzzleTwo);
+        yield return new PuzzleResult(resultPuzzleTwo);
     }
 
     private static readonly (string, int)[] NumbersAsStrings = Enumerable
@@ -62,5 +62,5 @@ public class DayOne : IPuzzleDay
         .ToArray();
 
     private static Seq<string> GetParsedInput() => FileProvider
-        .GetAllLines("Day1.input.txt");
+        .GetAllLines();
 }

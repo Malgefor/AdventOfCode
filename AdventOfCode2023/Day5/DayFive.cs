@@ -13,7 +13,7 @@ public class DayFive : IPuzzleDay
     public IEnumerable<PuzzleResult> PuzzleResults()
     {
         var parsedInput = GetParsedInput();
-        yield return new PuzzleResult(1, 1);
+        yield return new PuzzleResult(1);
     }
 
     private record AlmanacRangesRanges(int DestinationRangeStart, int SourceRangeStart, int RangeLength);
@@ -22,7 +22,7 @@ public class DayFive : IPuzzleDay
     {
         const string pattern = @"\b\d+\b";
 
-        var allLines = FileProvider.GetAllLines("Day5.input.txt", "\r\n\r\n");
+        var allLines = FileProvider.GetAllLines("\r\n\r\n");
         var seeds = Regex.Matches(allLines.Head, pattern).ToSeq().Map(x => int.Parse(x.Value));
 
         return (seeds, allLines.Tail.Map(ParseAlmanacEntries));

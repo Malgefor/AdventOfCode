@@ -18,7 +18,7 @@ public class DayEleven : IPuzzleDay
                 (octopuses, totalFlashes: 0, step: 0),
                 ProcessDay);
 
-        yield return new PuzzleResult(1, resultPuzzle1.totalFlashes);
+        yield return new PuzzleResult(resultPuzzle1.totalFlashes);
 
         var resultPuzzle2 = Seq
             .createRange(Enumerable.Range(1, int.MaxValue))
@@ -27,7 +27,7 @@ public class DayEleven : IPuzzleDay
                 ProcessDay,
                 tuple => tuple.octopuses.All(octopus => octopus.EnergyLevel == 0));
 
-        yield return new PuzzleResult(2, resultPuzzle2.step);
+        yield return new PuzzleResult(resultPuzzle2.step);
     }
 
     private static (Seq<Octopus> octopuses, int totalFlashes, int step) ProcessDay(
@@ -91,7 +91,7 @@ public class DayEleven : IPuzzleDay
     private static Seq<Octopus> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day11.input.txt")
+            .GetAllLines()
             .Map(
                 (verticalIndex, line) =>
                 {

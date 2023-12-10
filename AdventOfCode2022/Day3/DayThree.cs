@@ -25,7 +25,7 @@ public class DayThree : IPuzzleDay
             .Map(GetValue)
             .Sum();
 
-        return new[] { new PuzzleResult(1, puzzleOneAnswer), new PuzzleResult(2, puzzleTwoAnswer) };
+        return new[] { new PuzzleResult(puzzleOneAnswer), new PuzzleResult(puzzleTwoAnswer) };
     }
 
     private static readonly List<char> Priorities = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".ToList();
@@ -38,6 +38,6 @@ public class DayThree : IPuzzleDay
     private static Seq<string> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day3.input.txt");
+            .GetAllLines();
     }
 }

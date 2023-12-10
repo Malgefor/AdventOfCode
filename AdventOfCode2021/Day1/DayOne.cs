@@ -16,8 +16,8 @@ public class DayOne : IPuzzleDay
             .Select(tuple => tuple.Item1.Item1 + tuple.Item1.Item2 + tuple.Item2)
             .ToList();
 
-        yield return new PuzzleResult(1, CountGreaterThanPrevious(parsedInput));
-        yield return new PuzzleResult(2, CountGreaterThanPrevious(tripleZips));
+        yield return new PuzzleResult(CountGreaterThanPrevious(parsedInput));
+        yield return new PuzzleResult(CountGreaterThanPrevious(tripleZips));
     }
 
     private static int CountGreaterThanPrevious(IList<int> inputs)
@@ -31,7 +31,7 @@ public class DayOne : IPuzzleDay
     private static List<int> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day1.input.txt")
+            .GetAllLines()
             .Select(int.Parse)
             .ToList();
     }

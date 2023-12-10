@@ -31,7 +31,7 @@ public class DayFour : IPuzzleDay
             .Last()
             .card;
 
-        return new PuzzleResult(2, GetSumOfUnchecked(lastToWinBingoCard) * lastToWinBingoCard.LastCheckedNumber);
+        return new PuzzleResult(GetSumOfUnchecked(lastToWinBingoCard) * lastToWinBingoCard.LastCheckedNumber);
     }
 
     private static PuzzleResult GetPuzzleOneResult(Seq<int> drawnNumbers, Seq<BingoCard> bingoCards)
@@ -41,7 +41,7 @@ public class DayFour : IPuzzleDay
                 cards => cards.Any(card => card.HasCompleteColumnOrRow()))
             .First(card => card.HasCompleteColumnOrRow());
 
-        return new PuzzleResult(1, GetSumOfUnchecked(winningBingoCard) * winningBingoCard.LastCheckedNumber);
+        return new PuzzleResult(GetSumOfUnchecked(winningBingoCard) * winningBingoCard.LastCheckedNumber);
     }
 
     private static int GetSumOfUnchecked(BingoCard winningBingoCard)
@@ -55,7 +55,7 @@ public class DayFour : IPuzzleDay
     private static (Seq<int> DrawnNumbers, Seq<BingoCard> BingoCards) GetParsedInput()
     {
         var allLines = FileProvider
-            .GetAllLines("Day4.input.txt");
+            .GetAllLines();
 
         var drawnNumbers = allLines
             .Head

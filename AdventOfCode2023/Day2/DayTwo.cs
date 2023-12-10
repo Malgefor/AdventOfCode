@@ -24,7 +24,7 @@ public class DayTwo : IPuzzleDay
                     .ForAll(y => y.Count <= maxCounts.First(z => z.Colour == y.Colour).Count))
             .Sum(x => x.Id);
 
-        yield return new PuzzleResult(1, resultPuzzleOne);
+        yield return new PuzzleResult(resultPuzzleOne);
 
         var resultPuzzleTwo = parsedInput
             .Map(
@@ -43,7 +43,7 @@ public class DayTwo : IPuzzleDay
                         }))
             .Sum(x => x.Map(y => y.Value.Count).Reduce((acc, current) => acc * current));
 
-        yield return new PuzzleResult(2, resultPuzzleTwo);
+        yield return new PuzzleResult(resultPuzzleTwo);
     }
 
     private record Game(int Id, Seq<CubeCount> Cubes);
@@ -51,7 +51,7 @@ public class DayTwo : IPuzzleDay
     private record CubeCount(int Count, string Colour);
 
     private static Seq<Game> GetParsedInput() => FileProvider
-        .GetAllLines("Day2.input.txt")
+        .GetAllLines()
         .Map(
             game =>
             {

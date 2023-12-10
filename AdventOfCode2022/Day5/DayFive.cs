@@ -60,7 +60,7 @@ public class DayFive : IPuzzleDay
 
         var puzzleTwoAnswer = GetAnswer(orderedStacksPuzzleTwo);
 
-        return new[] { new PuzzleResult(1, puzzleOneAnswer), new PuzzleResult(2, puzzleTwoAnswer) };
+        return new[] { new PuzzleResult(puzzleOneAnswer), new PuzzleResult(puzzleTwoAnswer) };
     }
 
     private static string GetAnswer(List<Stack<char>> orderedStacks)
@@ -72,7 +72,7 @@ public class DayFive : IPuzzleDay
 
     private static (Stack<char>[] initialStacks, List<(int Amount, int From, int To)> instructions) GetParsedInput()
     {
-        var input = FileProvider.GetAllLines("Day5.input.txt", "\r\n\r\n");
+        var input = FileProvider.GetAllLines("\r\n\r\n");
         var initialStacks = ParseStacks(input[0].Split("\r\n"));
 
         var instructionRegex = new Regex("move\\s([0-9]+)\\sfrom\\s([0-9]+)\\sto\\s([0-9]+)", RegexOptions.Compiled);

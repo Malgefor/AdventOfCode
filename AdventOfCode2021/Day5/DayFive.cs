@@ -17,14 +17,10 @@ public class DayFive : IPuzzleDay
                     startAndEndPosition.Item2));
 
         yield return new PuzzleResult(
-            1,
-            CountPositionsWithOccurrenceMoreThanOnce(
-                allLines.Filter(line => line.IsVerticalOrHorizontal())));
+            CountPositionsWithOccurrenceMoreThanOnce(allLines.Filter(line => line.IsVerticalOrHorizontal())));
 
         yield return new PuzzleResult(
-            2,
-            CountPositionsWithOccurrenceMoreThanOnce(
-                allLines));
+            CountPositionsWithOccurrenceMoreThanOnce(allLines));
     }
 
     private static int CountPositionsWithOccurrenceMoreThanOnce(Seq<Line> lines)
@@ -38,7 +34,7 @@ public class DayFive : IPuzzleDay
     private static Seq<(Position, Position)> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day5.input.txt")
+            .GetAllLines()
             .Map(
                 lineString =>
                 {

@@ -46,13 +46,13 @@ public class DayFour : IPuzzleDay
                 })
             .Count;
 
-        return new[] { new PuzzleResult(1, puzzleOneAnswer), new PuzzleResult(2, puzzleTwoAnswer) };
+        return new[] { new PuzzleResult(puzzleOneAnswer), new PuzzleResult(puzzleTwoAnswer) };
     }
 
     private static Seq<Pair> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day4.input.txt")
+            .GetAllLines()
             .Map(
                 x =>
                 {

@@ -22,7 +22,7 @@ public class DayNine : IPuzzleDay
             .ToSeq();
 
         var riskScore = lowPoints.Sum(position => position.Value.Value + 1);
-        yield return new PuzzleResult(1, riskScore);
+        yield return new PuzzleResult(riskScore);
 
         var productOfLargestBasins = lowPoints
             .Map(pair => Dfs(pair.Value, input))
@@ -30,7 +30,7 @@ public class DayNine : IPuzzleDay
             .Take(3)
             .Fold(1, (reducer, nextValue) => reducer * nextValue.Value);
 
-        yield return new PuzzleResult(2, productOfLargestBasins);
+        yield return new PuzzleResult(productOfLargestBasins);
     }
 
     private static Option<Position> FindPositionAt(
@@ -104,7 +104,7 @@ public class DayNine : IPuzzleDay
     private static Dictionary<Coordinate, Position> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day9.input.txt")
+            .GetAllLines()
             .Map(
                 (rowIndex, lineOfPosition) =>
                 {

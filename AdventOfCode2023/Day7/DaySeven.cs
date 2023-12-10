@@ -16,14 +16,14 @@ public class DaySeven : IPuzzleDay
             .Map((index, hand) => hand.Bid * (index + 1))
             .Sum();
 
-        yield return new PuzzleResult(1, puzzleAnswerOne);
+        yield return new PuzzleResult(puzzleAnswerOne);
 
         var puzzleAnswerTwo = parsedInput
             .Order(new HandComparer(GetCardRankPuzzleTwo, true))
             .Map((index, hand) => hand.Bid * (index + 1))
             .Sum();
 
-        yield return new PuzzleResult(2, puzzleAnswerTwo);
+        yield return new PuzzleResult(puzzleAnswerTwo);
     }
 
     private record HandWithBid(string Cards, int Bid)
@@ -134,7 +134,7 @@ public class DaySeven : IPuzzleDay
     };
 
     private static Seq<HandWithBid> GetParsedInput() => FileProvider
-        .GetAllLines("Day7.input.txt")
+        .GetAllLines()
         .Map(
             line =>
             {

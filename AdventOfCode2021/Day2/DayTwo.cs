@@ -24,7 +24,7 @@ public class DayTwo : IPuzzleDay
                     down => (position.HorizontalPosition, position.Depth + down.Change),
                     forward => (position.HorizontalPosition + forward.Change, position.Depth)));
 
-        return new PuzzleResult(1, horizontalPosition * depth);
+        return new PuzzleResult(horizontalPosition * depth);
     }
 
     private static PuzzleResult GetPuzzleTwoResult(IList<IInstruction> instructions)
@@ -41,13 +41,13 @@ public class DayTwo : IPuzzleDay
                         position.Aim
                     )));
 
-        return new PuzzleResult(2, horizontalPosition * depth);
+        return new PuzzleResult(horizontalPosition * depth);
     }
 
     private static IList<IInstruction> GetParsedInput()
     {
         return FileProvider
-            .GetAllLines("Day2.input.txt")
+            .GetAllLines()
             .Select(
                 stringValue =>
                 {
