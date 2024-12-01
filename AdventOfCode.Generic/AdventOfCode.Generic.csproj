@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<ItemGroup>
-		<PackageReference Include="LanguageExt.Core" Version="4.4.7" />
-		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.0" />
+		<PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="9.0.0" />
 	</ItemGroup>
 
 </Project>
