@@ -20,9 +20,10 @@ public class FileProvider
 
         using var reader = new StreamReader(resourceStream);
 
-        return reader
+        var allLines = reader
             .ReadToEnd()
             .Split(splitOn)
             .ToSeq();
+        return allLines;
     }
 }
